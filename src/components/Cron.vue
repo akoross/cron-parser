@@ -3,7 +3,7 @@ import {onMounted, ref, watch} from 'vue'
 import cronstrue from 'cronstrue'
 
 const inputCron = ref('* * * * * *')
-const cronText = ref('')
+const cronText = ref()
 
 onMounted(() => {
   cronText.value = cronstrue.toString(inputCron.value)
@@ -12,14 +12,14 @@ onMounted(() => {
 const printCron = () => {
   try {
     cronText.value = cronstrue.toString(inputCron.value)
-  } catch (error) {
+  } catch (error: unknown) {
     cronText.value = error
   }
 }
 watch(inputCron, async () => {
   try {
     cronText.value = cronstrue.toString(inputCron.value)
-  } catch (error) {
+  } catch (error: unknown) {
     cronText.value = error
   }
 })
