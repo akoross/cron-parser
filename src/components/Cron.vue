@@ -2,27 +2,29 @@
 import {onMounted, ref, watch} from 'vue'
 import cronstrue from 'cronstrue'
 
-const inputCron = ref('* * * * * *')
+const inputCron = ref('5 * * * *')
 const cronText = ref()
 
 onMounted(() => {
-  cronText.value = cronstrue.toString(inputCron.value)
+  printCron()
 })
 
-const printCron = () => {
+watch(inputCron, () => {printCron()})
+
+function printCron() {
   try {
     cronText.value = cronstrue.toString(inputCron.value)
   } catch (error: unknown) {
     cronText.value = error
   }
 }
-watch(inputCron, async () => {
-  try {
-    cronText.value = cronstrue.toString(inputCron.value)
-  } catch (error: unknown) {
-    cronText.value = error
+
+function auitCron() {
+  const audit= inputCron.value.split(' ')
+  if (audit.length > 5) {
+    throw new Error('not use second')
   }
-})
+}
 </script>
 
 <template>
